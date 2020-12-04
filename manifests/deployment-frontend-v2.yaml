@@ -1,0 +1,26 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: frontend-app-v2
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+      version: v2
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: frontend
+        version: v2
+    spec:
+      containers:
+      - name: frontend-app
+        image: siguremon/frontend-app:0.0.1-SNAPSHOT
+        ports:
+        - containerPort: 8080
+        env:
+        - name: APP_VERSION
+          value: v2
+        - name: APP_URL
+          value: http://backend-app:8081
